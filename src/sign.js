@@ -2,6 +2,7 @@ import { config, qr } from "./config.js";
 import { activeSign, getStudentName, signIn } from "./request.js";
 import { extractSignId, sleep } from "./util.js";
 import { subscribe } from "./websocket.js";
+import qrcode from 'qrcode-terminal';
 const signedIdSet = new Set()
 let studentName;
 const QRType = {
@@ -31,6 +32,9 @@ export const handleQRSubscription = async (message) => {
         case 'plain':
         default:
           console.log(qrUrl);
+          qrcode.generate(qrUrl, {small: true}, function (qrcode) {
+            console.log(qrcode);
+          });
           break;
       }
       break;
